@@ -3,7 +3,6 @@ resource "aws_route53_zone" "primary" {
   name          = var.domain
 }
 
-
 resource "aws_route53_record" "cloudfront" {
   alias {
     evaluate_target_health = "false"
@@ -12,6 +11,18 @@ resource "aws_route53_record" "cloudfront" {
   }
 
   name    = var.domain
+  type    = "A"
+  zone_id = aws_route53_zone.primary.zone_id
+}
+
+resource "aws_route53_record" "cloudfront" {
+  alias {
+    evaluate_target_health = "false"
+    name                   = aws_cloudfront_distribution.s3_distribution.domain_name
+    zone_id                = "Z2FDTNDATAQYW2"
+  }
+
+  name    = "www.${var.domain}"
   type    = "A"
   zone_id = aws_route53_zone.primary.zone_id
 }
