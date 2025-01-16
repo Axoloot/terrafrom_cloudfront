@@ -15,7 +15,7 @@ resource "aws_route53_record" "cloudfront" {
   zone_id = aws_route53_zone.primary.zone_id
 }
 
-resource "aws_route53_record" "cloudfront" {
+resource "aws_route53_record" "cloudfront_www" {
   alias {
     evaluate_target_health = "false"
     name                   = aws_cloudfront_distribution.s3_distribution.domain_name
